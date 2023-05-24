@@ -17,6 +17,7 @@ use App\Filament\Resources\PostResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Database\Eloquent\Factories\Relationship;
 use App\Filament\Resources\PostResource\RelationManagers;
+use Filament\Forms\Components\RichEditor;
 
 class PostResource extends Resource
 {
@@ -34,11 +35,10 @@ class PostResource extends Resource
                     ->required()
                     ->minLength(5)
                     ->maxLength(100),
-                    Textarea::make('post')
+                    RichEditor::make('post')
                     ->required()
                     ->minLength(100)
                     ->maxlength(1000),
-                    TextInput::make('users')
                 ])
                 
             ]);
@@ -49,17 +49,22 @@ class PostResource extends Resource
         
         return $table
             ->columns([
-                TextColumn::make('title'),
-                TextColumn::make('post')
-                ->wrap(),
-                TextColumn::make('users.name')->label('Name')
+                TextColumn::make('title')
+                ->searchable()
+                ,TextColumn::make('post')
+                ->wrap()
+                ,TextColumn::make('created_at')
+                ->label('Created At')
+                ,TextColumn::make('users.name')
+                ->label('Name')
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                //Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),

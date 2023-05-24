@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title',2048);
             $table->longText('post',2048);
+            $table->string('post_photo')->nullable();
             $table->foreignId('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });

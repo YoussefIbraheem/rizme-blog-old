@@ -19,13 +19,13 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-users';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-               Select::make('access_type')->options(['user' , 'moderator'])
+               Select::make('access_type')->options(['user'=>'User' , 'moderator'=>'Moderator'])
             ]);
     }
 
@@ -33,6 +33,8 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
+                TextColumn::make('name'),
+                TextColumn::make('email'),
                 TextColumn::make('access_type')
             ])
             ->filters([
